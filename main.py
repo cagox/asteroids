@@ -5,6 +5,10 @@ import pygame
 from constants import *
 from player import Player
 
+updateable = pygame.sprite.Group()
+drawable = pygame.sprite.Group()
+Player.containers = (updateable, drawable)
+
 def main():
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -21,8 +25,9 @@ def main():
         screen.fill((0,0,0))
 
         dt = clock.tick(60)/1000
-        player.draw(screen)
-        
+        updateable.update(dt)
+        for item in drawable:
+            item.draw(screen)
         pygame.display.flip()
 
     # print("Starting asteroids!")
